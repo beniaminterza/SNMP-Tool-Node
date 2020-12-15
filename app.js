@@ -4,6 +4,19 @@ const app = express();
 const port = 3000;
 const snmp = require("net-snmp");
 
+//Optionen für die SNMP sessions
+const options = {
+    port: 161,
+    retries: 1,
+    timeout: 1000,
+    backoff: 1.0,
+    transport: "udp4",
+    trapPort: 162,
+    version: snmp.Version1,
+    backwardsGetNexts: true,
+    idBitsSize: 32,
+};
+
 //API fürs überprüfen ob bei einer IP Adresse SNMP eingeschaltet ist
 app.get("/checkIP/:ip", function (req, res) {
     checkSnmpApi(req.params.ip, res);
@@ -19,13 +32,18 @@ app.get("/allInformations/:ip/", function (req, res) {
     allInformations(req.params.ip, res);
 });
 
-//6 OIDS mit Werten bekommen
+//6 OIDS mit deren values bekommen
 app.get("/informations/:ip/", function (req, res) {
     getBasicInformations(req.params.ip, res);
 });
 
+//value von einer spezifischen oid bekommen
+app.get("/getValue/:ip/:oid", function (req, res) {
+    get(req.params.ip, req.params.oid, res);
+});
+
 function checkSnmpApi(ip, res) {
-    let session = snmp.createSession(ip, "public");
+    let session = snmp.createSession(ip, "public", options);
     console.log(ip);
 
     var oid = "0.0.0.0.0.0";
@@ -65,7 +83,7 @@ function checkNetwork(ip, mask, res) {
         let allSnmpIp = [];
 
         function checkSnmpForNetwork(ip, res) {
-            let session = snmp.createSession(ip, "public");
+            let session = snmp.createSession(ip, "public", options);
 
             var oid = "0.0.0.0.0.0";
             let counter = 0;
@@ -108,7 +126,7 @@ function checkNetwork(ip, mask, res) {
 }
 
 function allInformations(ip, res) {
-    let session = snmp.createSession(ip, "public");
+    let session = snmp.createSession(ip, "public", options);
     let oid = "0.0.0.0";
 
     let informations = [];
@@ -163,43 +181,18 @@ function validateMask(mask) {
     return false;
 }
 
-function containsNonLatinCodepoints(s) {
-    return /[^\u0000-\u00ff]/.test(s);
-}
-
-function getAllInformation(ip) {
-    let session = snmp.createSession(ip, "public");
-
-    var oid = "0.0.0.0.0.0";
-
-    function doneCb(error) {
-        if (error) console.error(error.toString());
-    }
-
-    function feedCb(varbinds) {
-        for (var i = 0; i < varbinds.length; i++) {
-            if (snmp.isVarbindError(varbinds[i])) {
-                console.error(snmp.varbindError(varbinds[i]));
-            } else if (
-                !containsNonLatinCodepoints(varbinds[i].value) &&
-                varbinds[i].value.length > 5
-            ) {
-                console.log(varbinds[i].oid + "|" + varbinds[i].value);
-            }
-        }
-    }
-
-    var maxRepetitions = 20;
-
-    // The maxRepetitions argument is optional, and will be ignored unless using
-    // SNMP verison 2c
-    session.walk(oid, maxRepetitions, feedCb, doneCb);
-}
 
 function getBasicInformations(ip, res) {
-    let session = snmp.createSession(ip, "public");
+    let session = snmp.createSession(ip, "public", options);
 
-    let oids = ["1.3.6.1.2.1.1.5.0", "1.3.6.1.2.1.1.6.0", "1.3.6.1.2.1.1.4.0", "1.3.6.1.2.1.1.1.0", "1.3.6.1.2.1.1.3.0", "1.3.6.1.2.1.2.2.1.2.1"];
+    let oids = [
+        "1.3.6.1.2.1.1.5.0",
+        "1.3.6.1.2.1.1.6.0",
+        "1.3.6.1.2.1.1.4.0",
+        "1.3.6.1.2.1.1.1.0",
+        "1.3.6.1.2.1.1.3.0",
+        "1.3.6.1.2.1.2.2.1.2.1",
+    ];
 
     let data = [];
     session.get(oids, function (error, varbinds) {
@@ -228,24 +221,35 @@ function getBasicInformations(ip, res) {
     });
 }
 
-//getAllInformation("127.0.0.1");
+function get(ip, oid, res) {
+    let session = snmp.createSession(ip, "public", options);
+
+    let oids = [oid];
+
+    session.get(oids, function (error, varbinds) {
+        if (error) {
+            console.error(error);
+            res.json({ status: "error" });
+        } else {
+            for (var i = 0; i < varbinds.length; i++)
+                if (snmp.isVarbindError(varbinds[i])) {
+                    console.error(snmp.varbindError(varbinds[i]));
+                    res.json({ status: "error" });
+                } else {
+                    let value = varbinds[i].value;
+                    if (varbinds[i].value instanceof Buffer) {
+                        value = varbinds[i].value.toString();
+                    }
+                    res.json({
+                        ip: ip,
+                        oid: oid,
+                        value: value,
+                        status: "ok",
+                    });
+                }
+        }
+        session.close();
+    });
+}
 
 app.listen(port, () => console.log(`app listening on port ${port}!`));
-
-// const fs = require("fs");
-// const http = require("http");
-
-// const server = http.createServer((req, res) => {
-//     res.writeHead(200, { "Content-Type": "text/html" });
-//     fs.readFile("frontend/index.html", (error, data) => {
-//         if (error) {
-//             res.writeHead(404);
-//             res.write("Error: File Not Found");
-//         } else {
-//             res.write(data);
-//         }
-//         res.end();
-//     });
-// });
-
-// server.listen(3001, () => console.log(`app listening on port ${port}!`));
