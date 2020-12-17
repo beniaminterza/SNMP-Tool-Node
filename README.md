@@ -25,15 +25,16 @@ node app.js
 You should be able to use the application :)
 # Next Steps
 - add a Set function to the back/frontend
+- make the scan network function also possible with a /16 and /8 subnet
+- catch and display errors on the frontend
 - fix some styling issues
 - refine and improve CSS
-- catch and display errors on the frontend
 - simplify the backend functions
 - simplify the frontend script -> perhaps split the script into multiple files
-- add more pages to frontend
 
 # Other goals
 - add more SNMP functions
 - add more animations to the frontend
 - make the frontend more user friendly
 - make the frontend with React
+- add more informational pages to frontend
