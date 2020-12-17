@@ -1,22 +1,62 @@
-const apiUrl = "http://localhost:3000/informations/";
 const loader = document.getElementById("hide-dots");
 
-async function getData() {
-    loader.setAttribute("id", "loading-dots");
+async function getApiData(apiUrl) {
+    loader.setAttribute("id", "loading-dots"); //add laoding anim
 
-    const input = document.getElementById("ipAddress");
-    console.log(input.value);
-    const response = await fetch(apiUrl + input.value);
+    const response = await fetch(apiUrl);
     const data = await response.json();
 
-    console.log(data);
-
-    //if(document.getElementById("result").childNodes.length > 0)document.getElementById("result").removeChild();
     let node = document.getElementById("data");
-    node.querySelectorAll("*").forEach((n) => n.remove());
+    node.querySelectorAll("*").forEach((n) => n.remove()); //remove old data
 
-    loader.setAttribute("id", "hide-dots");
+    loader.setAttribute("id", "hide-dots"); //remove laoding anim
+    console.log(data);
+    return data;
+}
+
+async function getBasics() {
+    const ip = document.getElementById("ipAddress").value;
+    let data = await getApiData(`http://localhost:3000/getBasics/${ip}`);
     createOIDValueTable(data);
+}
+
+async function getAll() {
+    const ip = document.getElementById("ipAddress").value;
+    let data = await getApiData(`http://localhost:3000/getAll/${ip}`);
+    createOIDValueTable(data);
+}
+
+async function get() {
+    const ip = document.getElementById("ipAddress").value;
+    const oid = document.getElementById("oid").value;
+    let data = await getApiData(`http://localhost:3000/get/${ip}/${oid}`);
+    createOIDValueTableWithoutArray(data);
+}
+
+function createOIDValueTableWithoutArray(data) {
+    let table = document.createElement("table");
+
+    //Header of the table
+    let header = document.createElement("tr");
+    let th1 = document.createElement("th");
+    th1.innerHTML = "OID";
+    header.appendChild(th1);
+    let th2 = document.createElement("th");
+    th2.innerHTML = "Value";
+    header.appendChild(th2);
+    table.appendChild(header);
+
+    //insert the data
+    let row = document.createElement("tr");
+    let th3 = document.createElement("td");
+    th3.innerHTML = data.oid;
+    row.appendChild(th3);
+    let th4 = document.createElement("td");
+    th4.innerHTML = data.value;
+    row.appendChild(th4);
+    table.appendChild(row);
+
+    document.getElementById("data").appendChild(table);
 }
 
 function createOIDValueTable(array) {
@@ -32,6 +72,7 @@ function createOIDValueTable(array) {
     header.appendChild(th2);
     table.appendChild(header);
 
+    //insert all the data
     for (let i = 0; i < array.length; i++) {
         let row = document.createElement("tr");
         let th1 = document.createElement("td");
@@ -50,24 +91,13 @@ function openGithub() {
 }
 
 async function scanNetwork() {
-    loader.setAttribute("id", "loading-dots");
-
     const ip = document.getElementById("ipAddress").value;
     const mask = document.getElementById("subnet").value;
-    console.log(ip);
-    console.log(mask);
-    const response = await fetch(
+
+    let data = await getApiData(
         `http://localhost:3000/scanNetwork/${ip}/${mask}`
     );
-    const data = await response.json();
 
-    console.log(data);
-
-    let node = document.getElementById("data");
-    console.log(node);
-    if (node != null) node.querySelectorAll("*").forEach((n) => n.remove());
-
-    loader.setAttribute("id", "hide-dots");
     createAvailableDevicesTable(data);
 }
 

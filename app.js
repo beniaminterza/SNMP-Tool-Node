@@ -36,17 +36,17 @@ app.get("/scanNetwork/:ip/:mask", function (req, res) {
 });
 
 //API für alle SNMP Informationen von einer IP Adresse
-app.get("/allInformations/:ip/", function (req, res) {
+app.get("/getAll/:ip/", function (req, res) {
     allInformations(req.params.ip, res);
 });
 
 //6 OIDS mit deren values bekommen
-app.get("/informations/:ip/", function (req, res) {
+app.get("/getBasics/:ip/", function (req, res) {
     getBasicInformations(req.params.ip, res);
 });
 
 //value von einer spezifischen oid bekommen
-app.get("/getValue/:ip/:oid", function (req, res) {
+app.get("/get/:ip/:oid", function (req, res) {
     get(req.params.ip, req.params.oid, res);
 });
 

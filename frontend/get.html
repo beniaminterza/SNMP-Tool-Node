@@ -5,7 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <link rel="stylesheet" href="style/basic.css" />
-        <link rel="stylesheet" href="style/scanNetwork.css" />
         <link rel="stylesheet" href="style/loadingAnimations.css" />
     </head>
     <body>
@@ -16,9 +15,9 @@
                 onclick="openGithub()"
             />
             <a href="index.html">Get</a>
-            <a href="get.html">Get value by OID</a>
+            <a href="">Get value by OID</a>
             <a href="getAll.html">Get all informations</a>
-            <a href="">Scan network</a>
+            <a href="scanNetwork.html">Scan network</a>
         </div>
 
         <div class="main">
@@ -34,15 +33,11 @@
                         />
                     </div>
                     <div class="inputs">
-                        <h4 id="subnetH1">Subnet Mask</h4>
-                        <select name="subnet" id="subnet">
-                            <option value="24">24</option>
-                            <option value="16">16</option>
-                            <option value="8">8</option>
-                        </select>
+                        <h4 id="subnetH1">OID</h4>
+                        <input type="text" name="OID" id="oid" placeholder="OID">
                     </div>
                 </div>
-                <button id="getButton" onclick="scanNetwork()">GET</button>
+                <button id="getButton" onclick="get()">GET</button>
             </div>
 
             <div class="result" id="result">
@@ -51,7 +46,7 @@
                     <div class="bounce2"></div>
                     <div class="bounce3"></div>
                 </div>
-                <div class="data" id = "data"></div>
+                <div class="data" id="data"></div>
             </div>
         </div>
 
