@@ -26,6 +26,7 @@ You should be able to use the application :)
 # Next Steps
 - add a Set function to the back/frontend
 - make the scan network function also possible with a /16 and /8 subnet
+- sort ip addresses from the scan network function
 - catch and display errors on the frontend
 - fix some styling issues
 - refine and improve CSS
