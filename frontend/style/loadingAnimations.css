@@ -1,0 +1,36 @@
+#loading-dots {
+    margin: 1rem;
+}
+
+#loading-dots > div {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    background-color: white;
+    border-radius: 50%;
+    animation: 1.5s bounce infinite ease-in-out;
+}
+
+#hide-dots > div {
+    display: none;
+}
+
+
+#loading-dots .bounce {
+    animation-delay: -0.5s;
+}
+
+#loading-dots .bounce2 {
+    animation-delay: -0.25s;
+}
+
+@keyframes bounce {
+    0%,
+    80%,
+    100% {
+        transform: scale(0);
+    }
+    40% {
+        transform: scale(1);
+    }
+}

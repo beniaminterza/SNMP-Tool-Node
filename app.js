@@ -1,8 +1,14 @@
 const express = require("express");
 const { fstat } = require("fs");
+let cors = require('cors')
 const app = express();
 const port = 3000;
 const snmp = require("net-snmp");
+
+var corsOptions = {
+    origin: "*",
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 
 //Optionen für die SNMP sessions
 const options = {
@@ -16,6 +22,8 @@ const options = {
     backwardsGetNexts: true,
     idBitsSize: 32,
 };
+
+app.use(cors(corsOptions));
 
 //API fürs überprüfen ob bei einer IP Adresse SNMP eingeschaltet ist
 app.get("/checkIP/:ip", function (req, res) {
@@ -180,7 +188,6 @@ function validateMask(mask) {
     if (mask === 0 || mask === 8 || mask === 16 || mask === 24) return true;
     return false;
 }
-
 
 function getBasicInformations(ip, res) {
     let session = snmp.createSession(ip, "public", options);

@@ -52,6 +52,7 @@ body {
     position: absolute;
     bottom: 0;
     width: 60%;
+    cursor: pointer;
 }
 
 .main {
@@ -103,10 +104,43 @@ body {
     padding: 50px;
     border-radius: 0 0 50px 50px;
     z-index: 1;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
+
+.data {
+    width: calc(100% - 100px);
+}
+
+.inputs {
+    width: 95%;
+    margin-bottom: 50px;
+    display: flex;
+}
+
 
 .inputs h4 {
     padding: 1rem;
     border: 2px white solid;
     color: white;
 }
+
+.inputs h4, input {
+    padding: 1rem;
+    width: 100%;
+}
+
+
+table {
+    border-collapse: collapse;
+    color: white;
+    width: 95%;
+}
+
+th, td {
+    border: 1px white solid;
+    padding: 0.5rem;
+    width: auto;
+}
+

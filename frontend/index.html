@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style/basic.css">
+    <link rel="stylesheet" href="style/loadingAnimations.css" />
 </head>
 <body>
     <div class="left menue">
-        <img src="Images/github_PNG152.png" alt="Github Logo">
+        <img src="Images/github_PNG152.png" alt="Github Logo" onclick="openGithub()">
         <a href="">Get</a>
         <a href="">Set</a>
-        <a href="">Scan network</a>
+        <a href="scanNetwork.html">Scan network</a>
         <a href="">Get all informations</a>
         <a href="">Get value by OID</a>
     </div>
@@ -20,14 +21,18 @@
         <div class="settings">
             <div class="inputs">
                 <h4>IP Address</h4>
-                <input type="text" name="" id="ipAddress" placeholder="127.0.0.1">
+                <input type="text" name="" id="ipAddress" placeholder="example: 127.0.0.1">
             </div>
-            <button>GET</button>
+            <button id="getButton" onclick="getData()">GET</button>
         </div>
 
-    
-        <div class="result">
-            <h1>The results will appear here!</h1>
+        <div class="result" id = "result">
+            <div id="hide-dots">
+                <div class="bounce"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+            <div class="data" id = "data"></div>
         </div>
     </div>
     
