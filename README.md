@@ -29,6 +29,7 @@ You should be able to use the application :)
 - sort ip addresses from the scan network function
 - catch and display errors on the frontend
 - fix some styling issues
+- add title to each page
 - refine and improve CSS
 - simplify the backend functions
 - simplify the frontend script -> perhaps split the script into multiple files
