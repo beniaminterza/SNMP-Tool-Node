@@ -1,6 +1,6 @@
 const express = require("express");
 const { fstat } = require("fs");
-let cors = require('cors')
+let cors = require("cors");
 const app = express();
 const port = 3000;
 const snmp = require("net-snmp");
@@ -90,7 +90,7 @@ function checkNetwork(ip, mask, res) {
 
         let allSnmpIp = [];
 
-        function checkSnmpForNetwork(ip, res) {
+        function checkSnmpForNetwork(ip, pos) {
             let session = snmp.createSession(ip, "public", options);
 
             var oid = "0.0.0.0.0.0";
@@ -101,7 +101,7 @@ function checkNetwork(ip, mask, res) {
                 if (counter === 0) console.log(`IP: ${ip} false`);
                 else {
                     console.log(`IP: ${ip} true`);
-                    allSnmpIp.push({ ip: ip, status: true });
+                    allSnmpIp.push({ ip: ip, status: true, pos: pos });
                 }
             }
 
@@ -125,9 +125,13 @@ function checkNetwork(ip, mask, res) {
             //hosts generiren
             let newIp = subnet + i;
             console.log(newIp);
-            checkSnmpForNetwork(newIp);
+            checkSnmpForNetwork(newIp, i);
         }
         setTimeout(() => {
+            allSnmpIp.sort((a, b) =>
+                a.pos > b.pos ? 1 : b.pos > a.pos ? -1 : 0
+            );
+
             res.json(allSnmpIp);
         }, 1000);
     }

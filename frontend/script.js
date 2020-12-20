@@ -97,7 +97,6 @@ async function scanNetwork() {
     let data = await getApiData(
         `http://localhost:3000/scanNetwork/${ip}/${mask}`
     );
-
     createAvailableDevicesTable(data);
 }
 
