@@ -18,7 +18,7 @@ const options = {
     backoff: 1.0,
     transport: "udp4",
     trapPort: 162,
-    version: snmp.Version1,
+    version: snmp.Version2,
     backwardsGetNexts: true,
     idBitsSize: 32,
 };
@@ -48,6 +48,10 @@ app.get("/getBasics/:ip/", function (req, res) {
 //value von einer spezifischen oid bekommen
 app.get("/get/:ip/:oid", function (req, res) {
     get(req.params.ip, req.params.oid, res);
+});
+
+app.get("/getMib", function (req, res) {
+    mib(res);
 });
 
 function checkSnmpApi(ip, res) {
@@ -261,6 +265,26 @@ function get(ip, oid, res) {
         }
         session.close();
     });
+}
+
+function mib(res) {
+    console.log("Hallo");
+    let store = snmp.createModuleStore();
+    store.loadFromFile(
+        "C:\\Users\\Beniamin\\Documents\\WebDevelopment\\SNMP2\\Mikrotik.mib"
+    );
+
+    let providers = store.getModules(false);
+
+    let jsonData = JSON.stringify(providers);
+    let fs = require("fs");
+    fs.writeFile("prividers.txt", jsonData, function (err) {
+        if (err) {
+            console.log(err);
+        }
+    });
+
+    res.json(providers);
 }
 
 app.listen(port, () => console.log(`app listening on port ${port}!`));

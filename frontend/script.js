@@ -117,5 +117,7 @@ function createAvailableDevicesTable(array) {
         row.appendChild(th1);
         table.appendChild(row);
     }
+
     document.getElementById("data").appendChild(table);
 }
+
