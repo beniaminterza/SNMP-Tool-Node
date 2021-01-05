@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Montserrat", sans-serif;
+}
+
+body {
+    background-color: #ececec;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.main {
+    width: calc(100% - 268px - 100px);
+    margin-left: 268px;
+    background-color: #ececec;
+    padding: 0 50px;
+}
+
+.buttonLink {
+    text-decoration: none;
+    width: 150px;
+    border-radius: 100px;
+    border: none;
+    color: white;
+    background-color: #fb439e;
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 8px 0;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+}
+
+.contentContainer {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    position: relative;
+}
+
+.novalidButton .buttonLink {
+    background-color: #7a7a7ac5;
+    cursor: no-drop;
+}
+
+.error {
+    color: #fb439e;
+}

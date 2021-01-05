@@ -1,0 +1,220 @@
+h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 50px 0;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 50px 0;
+}
+
+.presentation {
+    width: calc(100% - 3rem);
+    height: 130px;
+    min-width: 560px;
+}
+
+.presentation h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.presentation p {
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+
+.downloadContainer {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.downloadContainer a {
+    display: block;
+}
+
+.downloadContainer p {
+    color: #9c9c9c;
+    font-weight: 500;
+    font-size: 0.8rem;
+}
+
+.left {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.left img {
+    margin-right: 30px;
+}
+
+.exploreContent {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    width: calc(50% - 25px - 3rem);
+}
+
+.exploreContent img {
+    height: 100%;
+}
+
+.exploreContent a {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+}
+
+.exploreContent p {
+    height: 80px;
+}
+
+.exploreContent h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.description {
+    width: 70%;
+}
+
+.exploreContainers,
+.informationContainers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+}
+
+.input {
+    width: min-content;
+}
+
+.input a {
+    position: static;
+}
+
+.input input {
+    border-radius: 5px;
+    border: solid 3px black;
+    padding: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    width: calc(150px - 1rem);
+    margin-bottom: 1rem;
+}
+
+.informationsContent {
+    display: flex;
+    justify-content: flex-start;
+    height: min-content;
+    gap: 20px;
+    width: calc((100% - 200px - 3rem) / 3);
+}
+
+.informationsContent img {
+    height: 95px;
+}
+
+.informationsContent p {
+    height: 40px;
+    overflow-y: scroll;
+    word-break: break-all;
+}
+
+.oid {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: #9c9c9c;
+    font-size: 0.7rem;
+}
+
+.informationsContent h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.description {
+    height: 95px;
+    position: relative;
+}
+
+.mainInput {
+    display: flex;
+    gap: 20px;
+    width: calc(100% - 100px - 3rem - ((100% - 200px - 3rem) / 3));
+    margin-top: 50px;
+    justify-content: space-between;
+}
+
+.inputContainer {
+    display: flex;
+    align-self: center;
+}
+
+.mainInput h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    width: 100px;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.iconButtons {
+    display: flex;
+    gap: 20px;
+}
+
+.iconButtons img {
+    width: 100%;
+}
+
+.inputs input {
+    border-radius: 5px;
+    border: solid 3px black;
+    padding: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    width: 300px;
+    margin-bottom: 1rem;
+}
+
+.middleContainer {
+    display: flex;
+    gap: 50px;
+}
+
+.inputLeft {
+    width: calc((100% - 200px - 3rem) / 3);
+    margin-top: 50px;
+}
+
+.inputLeft a{
+    position: static;
+}
+
+.inputLeft input {
+    border-radius: 5px;
+    border: solid 3px black;
+    padding: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    width: calc(150px - 1rem);
+    margin-bottom: 1rem;
+}
