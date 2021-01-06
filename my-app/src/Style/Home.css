@@ -283,3 +283,7 @@ h2 {
 .table .header {
     background-color: #fffcf4;
 }
+
+.iconButton {
+    cursor: pointer;
+}

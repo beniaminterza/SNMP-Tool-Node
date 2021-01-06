@@ -215,12 +215,13 @@ function getBasicInformations(ip, res) {
         "sysContact",
         "sysDescription",
         "sysUptime",
-        "sysObjectID"
-    ]
+        "sysObjectID",
+    ];
 
-    let index = 0;
     let data = [];
     session.get(oids, function (error, varbinds) {
+        let index = 0;
+
         if (error) {
             console.error(error);
         } else {
@@ -233,8 +234,12 @@ function getBasicInformations(ip, res) {
                     if (varbinds[i].value instanceof Buffer) {
                         value = varbinds[i].value.toString();
                     }
-                    
-                    data.push({ oid: varbinds[i].oid, value: value, name: names[i] });
+
+                    data.push({
+                        oid: varbinds[i].oid,
+                        value: value,
+                        name: names[i],
+                    });
                     index++;
                 }
             }

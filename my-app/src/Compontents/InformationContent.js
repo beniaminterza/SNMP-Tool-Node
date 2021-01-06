@@ -19,7 +19,7 @@ export default function InformationContent(props) {
         var mins = s % 60;
         var hrs = (s - mins) / 60;
 
-        return hrs + ":" + mins + ":" + secs + "." + ms;
+        return `${hrs}h ${mins}m ${secs}s ${ms}ms`
     }
 
     return (

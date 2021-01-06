@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import InformationContent from "./InformationContent";
-import MainInput from "./MainInput";
+import MainInput from "./BigInput";
 import IpInput from "./IpInput";
 import ReplyTable from "./ReplyTable";
 import computer from "../Images/codeicon.svg";
@@ -12,27 +12,37 @@ import finger from "../Images/finger-icon.svg";
 
 export default function GetWalkSetIp({ match }) {
     const [valid, setValid] = useState(false);
-    const [basicValues, setBasicValues] = useState([]);
     const [basicContainers, setBasicContainers] = useState([]);
+    const [reachable, setReachable] = useState(false);
+    const [tableContent, setTableContent] = useState([]);
 
     const images = [computer, position, contact, write, time, finger];
 
     useEffect(() => {
         setValid(validateIPaddress(match.params.ip));
-        fetchBasics();
-    }, []);
+        checkSnmp();
+    }, [match.params.ip]);
+
+    useEffect(() => {
+        if (reachable) fetchBasics();
+    }, [reachable]);
+
+    async function checkSnmp() {
+        const url = `http://localhost:3001/checkIP/${match.params.ip}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        setReachable(data.snmp);
+    }
 
     async function fetchBasics() {
         const url = `http://localhost:3001/getBasics/${match.params.ip}`;
         const response = await fetch(url);
         const data = await response.json();
-        setBasicValues(data);
-    }
 
-    useEffect(() => {
         let i = -1;
+        setBasicContainers([]);
         setBasicContainers(
-            basicValues.map((element) => {
+            data.map((element) => {
                 i++;
                 return (
                     <InformationContent
@@ -45,7 +55,7 @@ export default function GetWalkSetIp({ match }) {
                 );
             })
         );
-    }, [basicValues]);
+    }
 
     function validateIPaddress(ipaddress) {
         if (
@@ -65,17 +75,40 @@ export default function GetWalkSetIp({ match }) {
                     ? `Get, Set and Walk: ${match.params.ip}`
                     : "Error: IP Address is not valid"}
             </h1>
-            <div className="informationContainers">{basicContainers}</div>
-            <div className="middleContainer">
-                <MainInput />
-                <IpInput
-                    buttonTitle="Change"
-                    title="Change IP"
-                    ip={match.params.ip}
-                />
-            </div>
+            {reachable ? (
+                <div>
+                    <div className="informationContainers">
+                        {basicContainers}
+                    </div>
+                    <div className="middleContainer">
+                        <MainInput
+                            ip={match.params.ip}
+                            tableContent={tableContent}
+                            setTableContent={setTableContent}
+                        />
+                        <IpInput
+                            buttonTitle="Change"
+                            title="Change IP"
+                            ip={match.params.ip}
+                        />
+                    </div>
 
-            <ReplyTable />
+                    <ReplyTable
+                        tableContent={tableContent}
+                    />
+                </div>
+            ) : (
+                <div>
+                    <h1 className="error">
+                        Not able to connect to {match.params.ip}
+                    </h1>
+                    <IpInput
+                        buttonTitle="Change"
+                        title="Change IP"
+                        ip={match.params.ip}
+                    />
+                </div>
+            )}
         </div>
     );
 }
