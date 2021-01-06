@@ -31,6 +31,7 @@ export default function GetWalkSetIp({ match }) {
         const url = `http://localhost:3001/checkIP/${match.params.ip}`;
         const response = await fetch(url);
         const data = await response.json();
+        setReachable();
         setReachable(data.snmp);
     }
 
@@ -93,9 +94,7 @@ export default function GetWalkSetIp({ match }) {
                         />
                     </div>
 
-                    <ReplyTable
-                        tableContent={tableContent}
-                    />
+                    <ReplyTable tableContent={tableContent} />
                 </div>
             ) : (
                 <div>
