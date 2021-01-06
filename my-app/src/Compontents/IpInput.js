@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import ButtonLink from "./ButtonLink";
 import IpIcon from "../Images/ip-icon.svg";
 
-
 export default function IpInput(props) {
     const [valid, setValid] = useState(false);
     const [input, setInput] = useState("");
@@ -11,6 +10,10 @@ export default function IpInput(props) {
         if (validateIPaddress(input)) setValid(true);
         else setValid(false);
     }, [input]);
+
+    useEffect(() => {
+        setInput(props.ip);
+    }, []);
 
     function inputChange(e) {
         setInput(e.target.value);

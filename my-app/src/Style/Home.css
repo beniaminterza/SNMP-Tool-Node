@@ -218,3 +218,68 @@ h2 {
     width: calc(150px - 1rem);
     margin-bottom: 1rem;
 }
+
+.table {
+    margin: 50px 0;
+}
+
+.table h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    width: 100px;
+}
+
+.table table {
+    width: 100%;
+}
+
+.table th p {
+    text-align: left;
+}
+
+.table th p {
+    padding: 20px 10px;
+}
+
+.table td p {
+    padding: 10px;
+}
+
+.table th, .table td {
+    width: calc(100% / 4);
+}
+
+
+.table .get {
+    background-color: #FFC6FF;
+}
+
+.table .get:nth-child(odd) {
+    background-color: #ffdaff;
+}
+
+.table .set {
+    background-color: #FDFFB6;
+}
+
+.table .set:nth-child(odd) {
+    background-color: #fdffce;
+}
+
+
+.table .walk {
+    background-color: #9BF6FF;
+}
+
+.table .walk:nth-child(odd) {
+    background-color: #c3faff;
+}
+
+.table table {
+    border-collapse: collapse;
+}
+
+.table .header {
+    background-color: #fffcf4;
+}

@@ -2,7 +2,7 @@ const express = require("express");
 const { fstat } = require("fs");
 let cors = require("cors");
 const app = express();
-const port = 3000;
+const port = 3001;
 const snmp = require("net-snmp");
 
 var corsOptions = {
@@ -206,9 +206,19 @@ function getBasicInformations(ip, res) {
         "1.3.6.1.2.1.1.4.0",
         "1.3.6.1.2.1.1.1.0",
         "1.3.6.1.2.1.1.3.0",
-        "1.3.6.1.2.1.2.2.1.2.1",
+        "1.3.6.1.2.1.1.2.0",
     ];
 
+    let names = [
+        "sysName",
+        "sysLocation",
+        "sysContact",
+        "sysDescription",
+        "sysUptime",
+        "sysObjectID"
+    ]
+
+    let index = 0;
     let data = [];
     session.get(oids, function (error, varbinds) {
         if (error) {
@@ -223,7 +233,9 @@ function getBasicInformations(ip, res) {
                     if (varbinds[i].value instanceof Buffer) {
                         value = varbinds[i].value.toString();
                     }
-                    data.push({ oid: varbinds[i].oid, value: value });
+                    
+                    data.push({ oid: varbinds[i].oid, value: value, name: names[i] });
+                    index++;
                 }
             }
         }
