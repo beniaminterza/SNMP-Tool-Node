@@ -36,9 +36,13 @@ app.get("/scanNetwork/:ip/:mask", function (req, res) {
 });
 
 //API für alle SNMP Informationen von einer IP Adresse
-app.get("/getAll/:ip/", function (req, res) {
-    allInformations(req.params.ip, res);
+app.get("/walk/:ip/:oid", function (req, res) {
+    walk(req.params.ip, req.params.oid, res);
 });
+
+app.get("/subtree/:ip/:oid", function (req, res){
+    subtree(req.params.ip, req.params.oid, res)
+})
 
 //6 OIDS mit deren values bekommen
 app.get("/getBasics/:ip/", function (req, res) {
@@ -53,6 +57,10 @@ app.get("/get/:ip/:oid", function (req, res) {
 app.get("/getMib", function (req, res) {
     mib(res);
 });
+
+app.set("/set/:ip/:oid/:value", function (req, res){
+    set(req.params.ip, req.params.oid, req.params.value, res);
+})
 
 function checkSnmpApi(ip, res) {
     let session = snmp.createSession(ip, "public", options);
@@ -82,7 +90,7 @@ function checkSnmpApi(ip, res) {
         console.log("false");
         return false;
     }
-
+    
     let maxRepetitions = 20;
     session.walk(oid, maxRepetitions, feedCb, doneCb); //walk ausführen
 }
@@ -141,9 +149,38 @@ function checkNetwork(ip, mask, res) {
     }
 }
 
-function allInformations(ip, res) {
+function subtree (ip, oid, res) {
     let session = snmp.createSession(ip, "public", options);
-    let oid = "0.0.0.0";
+
+    let informations = [];
+    function doneCb(error) {
+        res.json(informations);
+        if (error) console.error(error.toString());
+    }
+
+    function feedCb(varbinds) {
+        for (let i = 0; i < varbinds.length; i++) {
+            if (snmp.isVarbindError(varbinds[i]))
+                console.error(snmp.varbindError(varbinds[i]));
+            else {
+                let value = varbinds[i].value;
+                if (varbinds[i].value instanceof Buffer) {
+                    value = varbinds[i].value.toString();
+                }
+                informations.push({ oid: varbinds[i].oid, value: value });
+            }
+        }
+    }
+
+    let maxRepetitions = 20;
+
+    // The maxRepetitions argument is optional, and will be ignored unless using
+    // SNMP verison 2c
+    session.subtree(oid, maxRepetitions, feedCb, doneCb);
+}
+
+function walk (ip, oid, res) {
+    let session = snmp.createSession(ip, "public", options);
 
     let informations = [];
     function doneCb(error) {
@@ -281,6 +318,40 @@ function get(ip, oid, res) {
                 }
         }
         session.close();
+    });
+}
+
+function set(ip, oid, value, res) {
+    let varbinds = [
+        {
+            oid: oid,
+            type: snmp.ObjectType.OctetString,
+            value: value
+        }
+    ];
+
+    let session = snmp.createSession(ip, "public", options);
+
+    session.set (varbinds, function (error, varbinds) {
+
+        if (error) {
+            res.json({status: error})
+            console.error (error.toString ());
+        } else {
+            for (var i = 0; i < varbinds.length; i++) {
+                // for version 1 we can assume all OIDs were successful
+                console.log (varbinds[i].oid + "|" + varbinds[i].value);
+            
+                // for version 2c we must check each OID for an error condition
+                if (snmp.isVarbindError (varbinds[i]))
+                    console.error (snmp.varbindError (varbinds[i]));
+                else
+                    console.log (varbinds[i].oid + "|" + varbinds[i].value);
+
+                res.json({status: ok})
+        
+            }
+        }
     });
 }
 
