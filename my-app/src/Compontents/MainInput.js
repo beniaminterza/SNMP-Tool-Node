@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import ReplyTableElement from "./ReplyTableElement";
 import getIcon from "../Images/get-icon.svg";
-import walkIcon from "../Images/walk2-icon.svg";
+import treeIcon from "../Images/tree-icon.svg";
 import setIcon from "../Images/set-icon.svg";
 
-export default function BigInput({ ip, tableContent, setTableContent }) {
+export default function MainInput({
+    ip,
+    tableContent,
+    setTableContent,
+    fetchBasics,
+}) {
     const [oidInput, setOidInput] = useState("");
     const [valueInput, setValueInput] = useState("");
 
@@ -26,15 +31,51 @@ export default function BigInput({ ip, tableContent, setTableContent }) {
                 oid={data.oid}
                 type="GET"
                 value={data.value}
+                key={Math.random() * 10000}
             />,
             ...tableContent,
         ]);
         console.log(data);
     }
 
-    function walk() {}
+    async function subtree() {
+        const url = `http://localhost:3001/subtree/${ip}/${oidInput}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        setTableContent([
+            data.map((element) => {
+                return (
+                    <ReplyTableElement
+                        ip={ip}
+                        oid={element.oid}
+                        type="SUBTREE"
+                        value={element.value}
+                        key={Math.random() * 10000}
+                    />
+                );
+            }),
+            ...tableContent,
+        ]);
+        console.log(data);
+    }
 
-    function set() {}
+    async function set() {
+        const url = `http://localhost:3001/set/${ip}/${oidInput}/${valueInput}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        setTableContent([
+            <ReplyTableElement
+                ip={ip}
+                oid={data.oid}
+                type="SET"
+                value={`Status: ${data.status}`}
+                key={Math.random() * 10000}
+            />,
+            ...tableContent,
+        ]);
+        console.log(data);
+        fetchBasics();
+    }
 
     return (
         <div className="contentContainer mainInput">
@@ -64,10 +105,10 @@ export default function BigInput({ ip, tableContent, setTableContent }) {
                     <img src={getIcon} alt="get" onClick={get} />
                 </div>
                 <div className="iconButton">
-                    <img src={walkIcon} alt="walk" />
+                    <img src={treeIcon} alt="walk" onClick={subtree} />
                 </div>
                 <div className="iconButton">
-                    <img src={setIcon} alt="set" />
+                    <img src={setIcon} alt="set" onClick={set} />
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import InformationContent from "./InformationContent";
-import MainInput from "./BigInput";
+import MainInput from "./MainInput";
 import IpInput from "./IpInput";
 import ReplyTable from "./ReplyTable";
 import computer from "../Images/codeicon.svg";
@@ -15,6 +15,7 @@ export default function GetWalkSetIp({ match }) {
     const [basicContainers, setBasicContainers] = useState([]);
     const [reachable, setReachable] = useState(false);
     const [tableContent, setTableContent] = useState([]);
+    const [key, setKey] = useState(-1);
 
     const images = [computer, position, contact, write, time, finger];
 
@@ -86,6 +87,9 @@ export default function GetWalkSetIp({ match }) {
                             ip={match.params.ip}
                             tableContent={tableContent}
                             setTableContent={setTableContent}
+                            key = {key}
+                            setKey = {setKey}
+                            fetchBasics = {fetchBasics}
                         />
                         <IpInput
                             buttonTitle="Change"

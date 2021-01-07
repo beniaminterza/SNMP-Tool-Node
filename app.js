@@ -58,7 +58,9 @@ app.get("/getMib", function (req, res) {
     mib(res);
 });
 
-app.set("/set/:ip/:oid/:value", function (req, res){
+//set
+app.get("/set/:ip/:oid/:value", function (req, res){
+    console.log("asdfasdf")
     set(req.params.ip, req.params.oid, req.params.value, res);
 })
 
@@ -335,7 +337,7 @@ function set(ip, oid, value, res) {
     session.set (varbinds, function (error, varbinds) {
 
         if (error) {
-            res.json({status: error})
+            res.json({status: "error", oid: oid})
             console.error (error.toString ());
         } else {
             for (var i = 0; i < varbinds.length; i++) {
@@ -348,7 +350,7 @@ function set(ip, oid, value, res) {
                 else
                     console.log (varbinds[i].oid + "|" + varbinds[i].value);
 
-                res.json({status: ok})
+                res.json({status: "success", oid: oid})
         
             }
         }

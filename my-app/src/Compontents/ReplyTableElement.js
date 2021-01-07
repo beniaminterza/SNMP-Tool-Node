@@ -2,8 +2,8 @@ import React from "react";
 
 export default function ReplyTableElement({ ip, oid, type, value }) {
     return (
-        <tbody>
-            <tr className={type.toLowerCase()}>
+        <tbody className={type.toLowerCase()}>
+            <tr >
                 <td>
                     <p>{ip}</p>
                 </td>

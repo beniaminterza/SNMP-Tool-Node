@@ -205,7 +205,7 @@ h2 {
     margin-top: 50px;
 }
 
-.inputLeft a{
+.inputLeft a {
     position: static;
 }
 
@@ -244,15 +244,16 @@ h2 {
 
 .table td p {
     padding: 10px;
+    word-break: break-all;
 }
 
-.table th, .table td {
+.table th,
+.table td {
     width: calc(100% / 4);
 }
 
-
 .table .get {
-    background-color: #FFC6FF;
+    background-color: #ffc6ff;
 }
 
 .table .get:nth-child(odd) {
@@ -260,19 +261,18 @@ h2 {
 }
 
 .table .set {
-    background-color: #FDFFB6;
+    background-color: #fdffb6;
 }
 
 .table .set:nth-child(odd) {
     background-color: #fdffce;
 }
 
-
-.table .walk {
-    background-color: #9BF6FF;
+.table .subtree {
+    background-color: #9bf6ff;
 }
 
-.table .walk:nth-child(odd) {
+.table .subtree:nth-child(odd) {
     background-color: #c3faff;
 }
 

@@ -1,4 +1,5 @@
 import React from "react";
+import ReplyTableElement from "./ReplyTableElement";
 
 export default function ReplyTable({ tableContent }) {
     return (
@@ -21,7 +22,6 @@ export default function ReplyTable({ tableContent }) {
                         </th>
                     </tr>
                 </thead>
-
                 {tableContent}
             </table>
         </div>
