@@ -1,5 +1,4 @@
 import React from "react";
-import ReplyTableElement from "./ReplyTableElement";
 
 export default function ReplyTable({ tableContent }) {
     return (

@@ -3,6 +3,7 @@ import SideBar from "./Compontents/Sidebar";
 import Home from "./Compontents/Home";
 import GetWalkSet from "./Compontents/GetWalkSet";
 import GetWalkSetIp from "./Compontents/GetWalkSetIp";
+import ScanNetwork from "./Compontents/ScanNetwork"
 import "./Style/Basic.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -25,7 +26,8 @@ export default function App({ match }) {
                     <Route
                         path="/getWalkSet/:ip"
                         component={GetWalkSetIp}
-                    ></Route>
+                    />
+                    <Route path="/scanNetwork" component={ScanNetwork}/>
                 </Switch>
             </div>
         </Router>

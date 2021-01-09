@@ -287,3 +287,108 @@ h2 {
 .iconButton {
     cursor: pointer;
 }
+
+.inputsNetwork {
+    display: flex;
+    gap: 20px;
+}
+
+.input select {
+    border-radius: 5px;
+    border: solid 3px black;
+    padding: 0.4rem;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+table .true {
+    background-color: #7bf1a8;
+}
+
+table .true:nth-child(odd) {
+    background-color: #7bf1a8ab;
+}
+
+table .false {
+    background-color: #ffef9f;
+}
+
+table .false:nth-child(odd) {
+    background-color: #ffef9fa2;
+}
+
+.loader {
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    display: flex;
+    padding: 50px;
+    justify-content: center;
+}
+
+.loader span {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: #FFEF9F;
+    border-radius: 50%;
+    margin: 0 5px;
+}
+
+.loader span:nth-child(2) {
+    background: #C1FBA4;
+}
+
+.loader span:nth-child(3) {
+    background: #7BF1A8;
+}
+
+.loader span:nth-child(4) {
+    background: #90F1EF;
+}
+
+.loader span:not(:last-child) {
+    animation: animate 1.5s linear infinite;
+}
+
+@keyframes animate {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(30px);
+    }
+}
+
+.loader span:last-child {
+    animation: jump 1.5s ease-in-out infinite;
+}
+
+@keyframes jump {
+    0% {
+        transform: translate(0, 0);
+    }
+    10% {
+        transform: translate(10px, -10px);
+    }
+    20% {
+        transform: translate(20px, 10px);
+    }
+    30% {
+        transform: translate(30px, -50px);
+    }
+    70% {
+        transform: translate(-150px, -50px);
+    }
+    80% {
+        transform: translate(-140px, 10px);
+    }
+    90% {
+        transform: translate(-130px, -10px);
+    }
+    100% {
+        transform: translate(-120px, 0);
+    }
+}
+
