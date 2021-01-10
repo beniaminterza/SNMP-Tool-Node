@@ -10,7 +10,7 @@ import write from "../Images/write-icon.svg";
 import time from "../Images/time-icon.svg";
 import finger from "../Images/finger-icon.svg";
 
-export default function GetWalkSetIp({ match }) {
+export default function GetWalkSetIp({match }) {
     const [valid, setValid] = useState(false);
     const [basicContainers, setBasicContainers] = useState([]);
     const [reachable, setReachable] = useState(false);

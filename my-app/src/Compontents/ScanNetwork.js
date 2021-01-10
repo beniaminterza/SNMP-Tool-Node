@@ -3,10 +3,8 @@ import NetworkInput from "./NetworkInput";
 import ScanNetworkTable from "./ScanNetworkTable";
 import ScanNetworkTableElement from "./ScanNetworkTableElement";
 
-export default function ScanNetwork() {
-    const [tableContent, setTableContent] = useState([]);
+export default function ScanNetwork({ tableContent, setTableContent }) {
     const [input, setInput] = useState("");
-    const [key, setKey] = useState(-1);
     const [loading, setLoading] = useState(false);
 
     async function fetchData() {
@@ -16,13 +14,12 @@ export default function ScanNetwork() {
 
         setTableContent(
             data.map((element) => {
-                setKey(key + 1);
                 return (
                     <ScanNetworkTableElement
                         ip={element.host}
                         network={element.network}
                         snmp="true"
-                        key={key}
+                        key={element.host + element.network}
                     />
                 );
             })

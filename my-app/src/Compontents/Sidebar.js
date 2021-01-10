@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SidebarElem from "./SidebarElem";
 import "../Style/SideBar.css";
 
@@ -8,8 +8,31 @@ import walk from "../Images/walking-solid.svg";
 import radar from "../Images/radar.svg";
 import upload from "../Images/file-upload-solid.svg";
 import cog from "../Images/cog-solid.svg";
+import check from "../Images/check-solid.svg";
+import wrong from "../Images/wrong-solid.svg";
 
-export default function Sidebar({ url, setUrl }) {
+export default function Sidebar({ url, setUrl, available, setAvailable }) {
+
+    useEffect(() => {
+        fetchData();
+
+        setInterval(() => {
+            fetchData();
+        }, 1000);
+    }, []);
+
+    function fetchData() {
+        fetch(`http://localhost:3001/check`)
+            .then((response) => response.json())
+            .then((data) => {
+                if (data) setAvailable(true);
+            })
+            .catch((err) => {
+                setAvailable(false);
+                console.log(err);
+            });
+    }
+
     return (
         <div className="sidebar">
             <div className="logoContainer">
@@ -55,6 +78,17 @@ export default function Sidebar({ url, setUrl }) {
                 url={url}
                 setUrl={setUrl}
             />
+
+            <div className="connection sidebarElement">
+                <h4>Connection</h4>
+                <div className="imgContainer">
+                    {available ? (
+                        <img src={check} alt="ok" />
+                    ) : (
+                        <img src={wrong} alt="ok" />
+                    )}
+                </div>
+            </div>
         </div>
     );
 }

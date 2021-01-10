@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-export default function ScanNetworkTableElement({ ip, network, snmp }) {
+export default function ScanNetworkTableElement({ ip, network}) {
     const [reachable, setReachable] = useState(false);
 
     useEffect(() => checkSnmp(), []);
@@ -16,13 +17,31 @@ export default function ScanNetworkTableElement({ ip, network, snmp }) {
         <tbody className={`${reachable}`}>
             <tr>
                 <td>
-                    <p>{ip}</p>
+                    {reachable ? (
+                        <Link to={`/getWalkSet/${ip}`}  >
+                            <p>{ip}</p>
+                        </Link>
+                    ) : (
+                        <p>{ip}</p>
+                    )}
                 </td>
                 <td>
-                    <p>{network}</p>
+                    {reachable ? (
+                        <Link to={`/getWalkSet/${ip}`}>
+                            <p>{network}</p>
+                        </Link>
+                    ) : (
+                        <p>{network}</p>
+                    )}
                 </td>
                 <td>
-                    <p>{`${reachable}`}</p>
+                    {reachable ? (
+                        <Link to={`/getWalkSet/${ip}`}>
+                            <p>{`${reachable}`}</p>
+                        </Link>
+                    ) : (
+                        <p>{`${reachable}`}</p>
+                    )}
                 </td>
             </tr>
         </tbody>

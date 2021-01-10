@@ -18,10 +18,10 @@ export default function ScanNetworkTable({ tableContent, loading }) {
                         </th>
                     </tr>
                 </thead>
-                {!loading ? tableContent : <div></div>}
+                {tableContent}
             </table>
             {loading ? (
-                <div class="loader">
+                <div className="loader">
                     <span></span>
                     <span></span>
                     <span></span>

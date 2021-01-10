@@ -1,10 +1,10 @@
 const express = require("express");
-const { fstat } = require("fs");
 let cors = require("cors");
 const app = express();
 const port = 3001;
 const snmp = require("net-snmp");
 let ping = require("ping");
+
 
 var corsOptions = {
     origin: "*",
@@ -25,6 +25,10 @@ const options = {
 };
 
 app.use(cors(corsOptions));
+
+app.get("/check", function (req, res) {
+    res.json(true);
+});
 
 //API fürs überprüfen ob bei einer IP Adresse SNMP eingeschaltet ist
 app.get("/checkIP/:ip", function (req, res) {
