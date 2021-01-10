@@ -18,7 +18,7 @@ export default function ScanNetworkTableElement({ ip, network}) {
             <tr>
                 <td>
                     {reachable ? (
-                        <Link to={`/getWalkSet/${ip}`}  >
+                        <Link to={`/getSubtreeSet/${ip}`}  >
                             <p>{ip}</p>
                         </Link>
                     ) : (
@@ -27,7 +27,7 @@ export default function ScanNetworkTableElement({ ip, network}) {
                 </td>
                 <td>
                     {reachable ? (
-                        <Link to={`/getWalkSet/${ip}`}>
+                        <Link to={`/getSubtreeSet/${ip}`}>
                             <p>{network}</p>
                         </Link>
                     ) : (
@@ -36,7 +36,7 @@ export default function ScanNetworkTableElement({ ip, network}) {
                 </td>
                 <td>
                     {reachable ? (
-                        <Link to={`/getWalkSet/${ip}`}>
+                        <Link to={`/getSubtreeSet/${ip}`}>
                             <p>{`${reachable}`}</p>
                         </Link>
                     ) : (

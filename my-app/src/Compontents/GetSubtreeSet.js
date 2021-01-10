@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ButtonLink from "./ButtonLink";
 import IpIcon from "../Images/ip-icon.svg";
 
-export default function GetWalkSet(props) {
+export default function GetSubtreeSet(props) {
     const [valid, setValid] = useState(false);
     const [input, setInput] = useState("");
 
@@ -12,8 +12,10 @@ export default function GetWalkSet(props) {
     }, [input]);
 
     useEffect(() => {
-        props.setUrl("/getWalkSet")
+        props.setUrl("/getSubtreeSet")
     }, []);
+
+    
 
     function inputChange(e) {
         setInput(e.target.value);
@@ -32,7 +34,7 @@ export default function GetWalkSet(props) {
 
     return (
         <div className="main">
-            <h1>Get, Set and Walk {props.text}</h1>
+            <h1>Get, Subtree and Walk {props.text}</h1>
 
             <div className="exploreContent input contentContainer">
                 <img src={IpIcon} alt="IP icon" />
@@ -47,7 +49,7 @@ export default function GetWalkSet(props) {
                     <div className={valid ? "validButton" : "novalidButton"}>
                         <ButtonLink
                             title="Search"
-                            link={`/getWalkSet/${input}`}
+                            link={`/getSubtreeSet/${input}`}
                             valid={valid}
                         />
                     </div>

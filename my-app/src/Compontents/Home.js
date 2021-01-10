@@ -30,10 +30,10 @@ export default function Home() {
                     <ExploreContent
                         src={walk}
                         title="Get, Set and Walk"
-                        description="Do a walk or a get or a set with any IP Address and 
+                        description="Do a subtree or a get or a set with any IP Address and 
                         any OID "
                         index="e1"
-                        link="/getWalkSet"
+                        link="/getSubtreeSet"
                     />
                     <ExploreContent
                         src={radar}

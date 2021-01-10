@@ -10,7 +10,7 @@ import write from "../Images/write-icon.svg";
 import time from "../Images/time-icon.svg";
 import finger from "../Images/finger-icon.svg";
 
-export default function GetWalkSetIp({match }) {
+export default function GetSubtreeSetIp({match }) {
     const [valid, setValid] = useState(false);
     const [basicContainers, setBasicContainers] = useState([]);
     const [reachable, setReachable] = useState(false);
@@ -74,7 +74,7 @@ export default function GetWalkSetIp({match }) {
         <div className={valid ? `main` : `main error`}>
             <h1>
                 {valid
-                    ? `Get, Set and Walk: ${match.params.ip}`
+                    ? `Get, Subtree and Walk: ${match.params.ip}`
                     : "Error: IP Address is not valid"}
             </h1>
             {reachable ? (

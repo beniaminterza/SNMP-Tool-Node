@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import SideBar from "./Compontents/Sidebar";
 import Home from "./Compontents/Home";
-import GetWalkSet from "./Compontents/GetWalkSet";
-import GetWalkSetIp from "./Compontents/GetWalkSetIp";
+import GetSubtreeSet from "./Compontents/GetSubtreeSet";
+import GetSubtreeSetIp from "./Compontents/GetSubtreeSetIp";
 import ScanNetwork from "./Compontents/ScanNetwork";
 import ErrorLeiste from "./Compontents/ErrorLeiste";
 import "./Style/Basic.css";
@@ -14,7 +14,7 @@ export default function App({ match }) {
     const [available, setAvailable] = useState(false);
 
     useEffect(() => {
-        if (url.includes("/getWalkSet/")) setUrl("/getWalkSet");
+        if (url.includes("/getSubtreeSet/")) setUrl("/getSubtreeSet");
     }, [url]);
 
     return (
@@ -32,10 +32,10 @@ export default function App({ match }) {
                 />
                 <Switch>
                     <Route path="/" exact component={Home} />
-                    <Route path="/getWalkSet" exact>
-                        <GetWalkSet setUrl={setUrl} />
+                    <Route path="/getSubtreeSet" exact>
+                        <GetSubtreeSet setUrl={setUrl} />
                     </Route>
-                    <Route path="/getWalkSet/:ip" component={GetWalkSetIp} />
+                    <Route path="/getSubtreeSet/:ip" component={GetSubtreeSetIp} />
                     <Route path="/scanNetwork">
                         <ScanNetwork
                             tableContent={tableContent}

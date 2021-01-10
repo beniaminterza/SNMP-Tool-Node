@@ -43,7 +43,7 @@ export default function IpInput(props) {
                 <div className={valid ? "validButton" : "novalidButton"}>
                     <ButtonLink
                         title={props.buttonTitle}
-                        link={`/getWalkSet/${input}`}
+                        link={`/getSubtreeSet/${input}`}
                         valid={valid}
                     />
                 </div>

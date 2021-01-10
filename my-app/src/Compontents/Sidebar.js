@@ -11,7 +11,7 @@ import cog from "../Images/cog-solid.svg";
 import check from "../Images/check-solid.svg";
 import wrong from "../Images/wrong-solid.svg";
 
-export default function Sidebar({ url, setUrl, available, setAvailable }) {
+export default function Sidebar({ url, setUrl, available, setAvailable, match }) {
 
     useEffect(() => {
         fetchData();
@@ -47,9 +47,9 @@ export default function Sidebar({ url, setUrl, available, setAvailable }) {
                 setUrl={setUrl}
             />
             <SidebarElem
-                link={"/getWalkSet"}
+                link={"/getSubtreeSet"}
                 img={walk}
-                title="Get, Set, Walk"
+                title="Get, Set, Subtree"
                 alt="Person"
                 url={url}
                 setUrl={setUrl}
