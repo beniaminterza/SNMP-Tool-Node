@@ -1,16 +1,38 @@
 import React, { useState, useEffect } from "react";
 import IpIcon from "../Images/scan-radar-icon.svg";
 
-export default function NetworkInput({input, setInput, fetchData, setLoading}) {
+export default function NetworkInput({
+    input,
+    setInput,
+    fetchData,
+    setLoading,
+}) {
     const [valid, setValid] = useState(false);
+    const [changeInput, setChangeInput] = useState(false);
 
     useEffect(() => {
+        if (changeInput) saveToLocalStorage();
         if (validateIPaddress(input)) setValid(true);
         else setValid(false);
     }, [input]);
 
+    useEffect(() => {
+        loadLocalStorage();
+    }, []);
+
     function inputChange(e) {
+        setChangeInput(true);
         setInput(e.target.value);
+    }
+
+    function saveToLocalStorage() {
+        localStorage.setItem("IPInput", input);
+    }
+
+    function loadLocalStorage() {
+        if (localStorage.getItem("IPInput") !== "undefined") {
+            setInput(localStorage.getItem("IPInput"));
+        }
     }
 
     function validateIPaddress(ipaddress) {
@@ -24,8 +46,8 @@ export default function NetworkInput({input, setInput, fetchData, setLoading}) {
         return false;
     }
 
-    function callApi (){
-        setLoading(true)
+    function callApi() {
+        setLoading(true);
         if (valid) {
             fetchData();
         }
@@ -33,7 +55,7 @@ export default function NetworkInput({input, setInput, fetchData, setLoading}) {
 
     return (
         <div className="exploreContent input contentContainer">
-            <img src={IpIcon} alt="IP icon" />
+            <img  className="ScanIP" src={IpIcon} alt="scane" />
             <div className="description">
                 <div className="inputsNetwork">
                     <div>
@@ -53,7 +75,10 @@ export default function NetworkInput({input, setInput, fetchData, setLoading}) {
                     </div>
                 </div>
 
-                <div className={valid ? "validButton" : "novalidButton"} onClick={callApi}>
+                <div
+                    className={valid ? "validButton" : "novalidButton"}
+                    onClick={callApi}
+                >
                     <button className="buttonLink">Scan</button>
                 </div>
             </div>

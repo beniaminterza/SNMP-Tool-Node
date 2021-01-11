@@ -8,7 +8,6 @@ import radar from "../Images/radar-icon.svg";
 import upload from "../Images/upload-icon.svg";
 import cog from "../Images/cog-icon.svg";
 
-
 export default function Home() {
     return (
         <div className="main">
@@ -21,7 +20,10 @@ export default function Home() {
                         <img src={globe} alt="Globe" />
                         <div className="downloadContainer">
                             <p>Download the "SNMP WEB Server" here</p>
-                            <Button title="Download" link="https://github.com/beniaminterza/SNMP-Tool-Node" />
+                            <Button
+                                title="Download"
+                                link="https://github.com/beniaminterza/SNMP-Tool-Node"
+                            />
                         </div>
                     </div>
                 </div>
@@ -29,7 +31,7 @@ export default function Home() {
                 <div className="exploreContainers">
                     <ExploreContent
                         src={walk}
-                        title="Get, Set and Walk"
+                        title="Get, Subtree and Walk"
                         description="Do a subtree or a get or a set with any IP Address and 
                         any OID "
                         index="e1"
@@ -55,7 +57,7 @@ export default function Home() {
                         title="Settings"
                         description="Change settings so that they fit to your preferences"
                         index="e4"
-                        link=""
+                        link="/settings"
                     />
                 </div>
             </div>

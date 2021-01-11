@@ -5,6 +5,7 @@ import IpIcon from "../Images/ip-icon.svg";
 export default function GetSubtreeSet(props) {
     const [valid, setValid] = useState(false);
     const [input, setInput] = useState("");
+    const [inputChange, setInputChange] = useState(false);
 
     useEffect(() => {
         if (validateIPaddress(input)) setValid(true);
@@ -12,14 +13,18 @@ export default function GetSubtreeSet(props) {
     }, [input]);
 
     useEffect(() => {
-        props.setUrl("/getSubtreeSet")
+        props.setUrl("/getSubtreeSet");
+        loadLocalStorage();
     }, []);
 
-    
-
-    function inputChange(e) {
+    function inputUpdate(e) {
+        setInputChange(true);
         setInput(e.target.value);
     }
+
+    useEffect(() => {
+        if (inputChange) saveToLocalStorage();
+    }, [input]);
 
     function validateIPaddress(ipaddress) {
         if (
@@ -30,6 +35,16 @@ export default function GetSubtreeSet(props) {
             return true;
         }
         return false;
+    }
+
+    function saveToLocalStorage() {
+        localStorage.setItem("IPInput", input);
+    }
+
+    function loadLocalStorage() {
+        if (localStorage.getItem("IPInput") !== "undefined") {
+            setInput(localStorage.getItem("IPInput"));
+        }
     }
 
     return (
@@ -43,7 +58,7 @@ export default function GetSubtreeSet(props) {
                     <input
                         type="text"
                         placeholder="ex. 127.0.0.1"
-                        onChange={inputChange}
+                        onChange={inputUpdate}
                         value={input}
                     />
                     <div className={valid ? "validButton" : "novalidButton"}>

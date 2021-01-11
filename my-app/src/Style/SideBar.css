@@ -95,6 +95,7 @@
 .fadeOut {
     opacity: 0;
     animation: fadeOut 1s ;
+    transform: translateY(100%);
 }
 
 .errorLeiste h1 {
@@ -121,10 +122,10 @@
 @keyframes fadeOut {
     from {
         opacity: 1;
+        transform: translateY(-0%);
     }
 
     to {
         opacity: 0;
-        transform: translateY(100%);
     }
 }

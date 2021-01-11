@@ -30,6 +30,7 @@ export default function IpInput(props) {
         return false;
     }
 
+
     return (
         <div className="exploreContent inputLeft contentContainer">
             <div className="description">

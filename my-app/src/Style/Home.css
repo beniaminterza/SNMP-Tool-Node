@@ -330,21 +330,21 @@ table .false:nth-child(odd) {
     display: block;
     width: 20px;
     height: 20px;
-    background: #FFEF9F;
+    background: #ffef9f;
     border-radius: 50%;
     margin: 0 5px;
 }
 
 .loader span:nth-child(2) {
-    background: #C1FBA4;
+    background: #c1fba4;
 }
 
 .loader span:nth-child(3) {
-    background: #7BF1A8;
+    background: #7bf1a8;
 }
 
 .loader span:nth-child(4) {
-    background: #90F1EF;
+    background: #90f1ef;
 }
 
 .loader span:not(:last-child) {
@@ -392,3 +392,40 @@ table .false:nth-child(odd) {
     }
 }
 
+.timeout {
+    flex-direction: column;
+    width: max-content;
+    align-items: center;
+}
+
+.timeoutInput {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+.timeoutInput h3 {
+    color: #f72585;
+    font-size: 20px;
+    position: absolute;
+    right: -40px;
+    top: -5px;
+}
+
+.timeoutInput input {
+    margin: 0;
+    width: 50px;
+}
+
+.timeout p {
+    width: 250px;
+}
+.timeout h3 {
+    margin: 0;
+}
+
+.ScanIP {
+    height: 100%;
+    display: block;
+}

@@ -5,14 +5,13 @@ const port = 3001;
 const snmp = require("net-snmp");
 let ping = require("ping");
 
-
 var corsOptions = {
     origin: "*",
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
 //Optionen für die SNMP sessions
-const options = {
+let options = {
     port: 161,
     retries: 1,
     timeout: 1000,
@@ -65,8 +64,27 @@ app.get("/getMib", function (req, res) {
 
 //set
 app.get("/set/:ip/:oid/:value", function (req, res) {
-    console.log("asdfasdf");
     set(req.params.ip, req.params.oid, req.params.value, res);
+});
+
+
+//timeout verändern
+app.get("/setTimeout/:timeout", function (req, res) {
+    console.log("asepp " + req.params)
+    options = {
+        port: 161,
+        retries: 1,
+        timeout: req.params.timeout,
+        backoff: 1.0,
+        transport: "udp4",
+        trapPort: 162,
+        version: snmp.Version2,
+        backwardsGetNexts: true,
+        idBitsSize: 32,
+    };
+    console.log("JOP SEP")
+    console.log(options)
+    res.json("OK")
 });
 
 function checkSnmpApi(ip, res) {
