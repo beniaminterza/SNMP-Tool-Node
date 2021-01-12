@@ -34,7 +34,7 @@ export default function App({ match }) {
                     setAvailable={setAvailable}
                 />
                 <Switch>
-                    <Route path="/" exact component={Home} />
+                    <Route path="/SNMP-REACT-Client" exact component={Home} />
                     <Route path="/getSubtreeSet" exact>
                         <GetSubtreeSet setUrl={setUrl} />
                     </Route>

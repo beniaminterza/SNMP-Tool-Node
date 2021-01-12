@@ -46,7 +46,7 @@ export default function Sidebar({
                 <img src={logo} alt="snmp web logo" className="logo" />
             </div>
             <SidebarElem
-                link={"/"}
+                link={"/SNMP-REACT-Client"}
                 img={home}
                 title="Home"
                 alt="home"
