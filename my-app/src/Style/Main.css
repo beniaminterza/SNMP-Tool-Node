@@ -1,0 +1,443 @@
+h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 50px 0;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 50px 0;
+}
+
+.presentation {
+    width: calc(100% - 3rem);
+    height: 130px;
+    min-width: 560px;
+}
+
+.presentation h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.presentation p {
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+
+.downloadContainer {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.downloadContainer a {
+    display: block;
+}
+
+.downloadContainer p {
+    color: #9c9c9c;
+    font-weight: 500;
+    font-size: 0.8rem;
+}
+
+.left {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.left img {
+    margin-right: 30px;
+}
+
+.exploreContent {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    width: calc(50% - 25px - 3rem);
+}
+
+.exploreContent img {
+    height: 100%;
+}
+
+.exploreContent a {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+}
+
+.exploreContent p {
+    height: 80px;
+}
+
+.exploreContent h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.description {
+    width: 70%;
+}
+
+.exploreContainers,
+.informationContainers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+}
+
+.input {
+    width: min-content;
+}
+
+.input a {
+    position: static;
+}
+
+.input input {
+    border-radius: 5px;
+    border: solid 3px black;
+    padding: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    width: calc(150px - 1rem);
+    margin-bottom: 1rem;
+}
+
+.informationsContent {
+    display: flex;
+    justify-content: flex-start;
+    height: min-content;
+    gap: 20px;
+    width: calc((100% - 200px - 3rem) / 3);
+}
+
+.informationsContent img {
+    height: 95px;
+}
+
+.informationsContent p {
+    height: 40px;
+    overflow-y: scroll;
+    word-break: break-all;
+}
+
+.oid {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: #9c9c9c;
+    font-size: 0.7rem;
+}
+
+.informationsContent h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.description {
+    height: 95px;
+    position: relative;
+}
+
+.mainInput {
+    display: flex;
+    gap: 20px;
+    width: calc(100% - 100px - 3rem - ((100% - 200px - 3rem) / 3));
+    margin-top: 50px;
+    justify-content: space-between;
+}
+
+.inputContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.mainInput h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.iconButtons {
+    display: flex;
+    gap: 20px;
+}
+
+.iconButtons img {
+    width: 100%;
+}
+
+.inputs input {
+    border-radius: 5px;
+    border: solid 3px black;
+    padding: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    width: 300px;
+    margin-bottom: 1rem;
+}
+
+.middleContainer {
+    display: flex;
+    gap: 50px;
+}
+
+.inputLeft {
+    width: calc((100% - 200px - 3rem) / 3);
+    margin-top: 50px;
+}
+
+.inputLeft a {
+    position: static;
+}
+
+.inputLeft input {
+    border-radius: 5px;
+    border: solid 3px black;
+    padding: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    width: calc(150px - 1rem);
+    margin-bottom: 1rem;
+}
+
+.table {
+    margin: 50px 0;
+}
+
+.table h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    width: 100px;
+}
+
+.table table {
+    width: 100%;
+}
+
+.table th p {
+    text-align: left;
+}
+
+.table th p {
+    padding: 20px 10px;
+}
+
+.table td p {
+    padding: 10px;
+    word-break: break-all;
+}
+
+.table th,
+.table td {
+    width: calc(100% / 4);
+}
+
+.table .get {
+    background-color: #ffc6ff;
+}
+
+.table .get:nth-child(odd) {
+    background-color: #ffdaff;
+}
+
+.table .set {
+    background-color: #fdffb6;
+}
+
+.table .set:nth-child(odd) {
+    background-color: #fdffce;
+}
+
+.table .subtree {
+    background-color: #9bf6ff;
+}
+
+.table .subtree:nth-child(odd) {
+    background-color: #c3faff;
+}
+
+.table table {
+    border-collapse: collapse;
+}
+
+.table .header {
+    background-color: #fffcf4;
+}
+
+.iconButton {
+    cursor: pointer;
+}
+
+.inputsNetwork {
+    display: flex;
+    gap: 20px;
+}
+
+.input select {
+    border-radius: 5px;
+    border: solid 3px black;
+    padding: 0.4rem;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+table .true {
+    background-color: #7bf1a8;
+}
+
+table .true:nth-child(odd) {
+    background-color: #7bf1a8ab;
+}
+
+table .false {
+    background-color: #ffef9f;
+}
+
+table .false:nth-child(odd) {
+    background-color: #ffef9fa2;
+}
+
+.loader {
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    display: flex;
+    padding: 50px;
+    justify-content: center;
+}
+
+.loader span {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: #ffef9f;
+    border-radius: 50%;
+    margin: 0 5px;
+}
+
+.loader span:nth-child(2) {
+    background: #c1fba4;
+}
+
+.loader span:nth-child(3) {
+    background: #7bf1a8;
+}
+
+.loader span:nth-child(4) {
+    background: #90f1ef;
+}
+
+.loader span:not(:last-child) {
+    animation: animate 1.5s linear infinite;
+}
+
+@keyframes animate {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(30px);
+    }
+}
+
+.loader span:last-child {
+    animation: jump 1.5s ease-in-out infinite;
+}
+
+@keyframes jump {
+    0% {
+        transform: translate(0, 0);
+    }
+    10% {
+        transform: translate(10px, -10px);
+    }
+    20% {
+        transform: translate(20px, 10px);
+    }
+    30% {
+        transform: translate(30px, -50px);
+    }
+    70% {
+        transform: translate(-150px, -50px);
+    }
+    80% {
+        transform: translate(-140px, 10px);
+    }
+    90% {
+        transform: translate(-130px, -10px);
+    }
+    100% {
+        transform: translate(-120px, 0);
+    }
+}
+
+.timeout {
+    flex-direction: column;
+    width: max-content;
+    align-items: center;
+}
+
+.timeoutInput {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+.timeoutInput h3 {
+    color: #f72585;
+    font-size: 20px;
+    position: absolute;
+    right: -40px;
+    top: -5px;
+}
+
+.timeoutInput input {
+    margin: 0;
+    width: 50px;
+}
+
+.timeout p {
+    width: 250px;
+}
+.timeout h3 {
+    margin: 0;
+}
+
+.ScanIP {
+    height: 100%;
+    display: block;
+}
+
+.inputContainer input{
+    margin: 0;
+}
+
+.trap {
+    background-color: rgb(255, 198, 184);
+}
+
+.trap:nth-child(odd){
+    background-color: rgb(255, 224, 216);
+}

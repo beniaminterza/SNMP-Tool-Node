@@ -1,11 +1,11 @@
 import React from "react";
-import "../Style/Home.css";
+import "../Style/Main.css";
 import Button from "./ButtonA";
 import ExploreContent from "./ExploreContent";
 import globe from "../Images/globe-solid.svg";
 import walk from "../Images/walking-icon.svg";
 import radar from "../Images/radar-icon.svg";
-import upload from "../Images/upload-icon.svg";
+import trap from "../Images/trap-icon.svg";
 import cog from "../Images/cog-icon.svg";
 
 export default function Home() {
@@ -45,12 +45,11 @@ export default function Home() {
                         link=""
                     />
                     <ExploreContent
-                        src={upload}
-                        title="Load MIB"
-                        description="Upload a MIB and choose the OIDs that you would
-                        like to get"
+                        src={trap}
+                        title="Traps"
+                        description="Receive all the traps"
                         index="e3"
-                        link=""
+                        link="/traps"
                     />
                     <ExploreContent
                         src={cog}

@@ -14,6 +14,7 @@ export default function MainInput({
     const [oidChange, setOidChange] = useState(false);
     const [valueInput, setValueInput] = useState("");
     const [valueChange, setValueChange] = useState(false);
+    const [communityInput, setCommunityInput] = useState("public");
 
     function oidInputHandler(e) {
         setOidChange(true);
@@ -33,8 +34,12 @@ export default function MainInput({
         if (valueChange) saveValueToLocalStorage();
     }, [valueInput]);
 
+    function communityInputHandler(e) {
+        setCommunityInput(e.target.value);
+    }
+
     async function get() {
-        const url = `http://localhost:3001/get/${ip}/${oidInput}`;
+        const url = `http://localhost:3001/get/${ip}/${oidInput}/${communityInput}`;
         const response = await fetch(url);
         const data = await response.json();
         setTableContent([
@@ -51,7 +56,7 @@ export default function MainInput({
     }
 
     async function subtree() {
-        const url = `http://localhost:3001/subtree/${ip}/${oidInput}`;
+        const url = `http://localhost:3001/subtree/${ip}/${oidInput}/${communityInput}`;
         const response = await fetch(url);
         const data = await response.json();
         setTableContent([
@@ -72,7 +77,7 @@ export default function MainInput({
     }
 
     async function set() {
-        const url = `http://localhost:3001/set/${ip}/${oidInput}/${valueInput}`;
+        const url = `http://localhost:3001/set/${ip}/${oidInput}/${valueInput}/${communityInput}`;
         const response = await fetch(url);
         const data = await response.json();
         setTableContent([
@@ -130,6 +135,15 @@ export default function MainInput({
                         value={valueInput}
                         onChange={valueInputHandler}
                         placeholder="ex. Router 5550"
+                    />
+                </div>
+
+                <div className="inputContainer community">
+                    <h3>Community</h3>
+                    <input
+                        type={communityInput === "public" ? "text" : "password"}
+                        value={communityInput}
+                        onChange={communityInputHandler}
                     />
                 </div>
             </div>

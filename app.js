@@ -4,7 +4,6 @@ const app = express();
 const port = 3001;
 const snmp = require("net-snmp");
 let ping = require("ping");
-const find = require("local-devices")
 
 var corsOptions = {
     origin: "*",
@@ -40,38 +39,38 @@ app.get("/scanNetwork/:ip/:mask", function (req, res) {
     pingNetwork(req.params.ip, req.params.mask, res);
 });
 
-//API für alle SNMP Informationen von einer IP Adresse
-app.get("/walk/:ip/:oid", function (req, res) {
-    walk(req.params.ip, req.params.oid, res);
-});
-
-app.get("/subtree/:ip/:oid", function (req, res) {
-    subtree(req.params.ip, req.params.oid, res);
-});
-
 //6 OIDS mit deren values bekommen
-app.get("/getBasics/:ip/", function (req, res) {
+app.get("/getBasics/:ip", function (req, res) {
     getBasicInformations(req.params.ip, res);
 });
 
 //value von einer spezifischen oid bekommen
-app.get("/get/:ip/:oid", function (req, res) {
-    get(req.params.ip, req.params.oid, res);
-});
-
-app.get("/getMib", function (req, res) {
-    mib(res);
+app.get("/get/:ip/:oid/:community", function (req, res) {
+    get(req.params.ip, req.params.oid, req.params.community, res);
 });
 
 //set
-app.get("/set/:ip/:oid/:value", function (req, res) {
-    set(req.params.ip, req.params.oid, req.params.value, res);
+app.get("/set/:ip/:oid/:value/:community", function (req, res) {
+    set(
+        req.params.ip,
+        req.params.oid,
+        req.params.value,
+        req.params.community,
+        res
+    );
 });
 
+app.get("/subtree/:ip/:oid/:community", function (req, res) {
+    subtree(req.params.ip, req.params.oid, req.params.community, res);
+});
+
+app.get("/traps", function (req, res) {
+    trap(res);
+});
 
 //timeout verändern
 app.get("/setTimeout/:timeout", function (req, res) {
-    console.log("asepp " + req.params)
+    console.log("asepp " + req.params);
     options = {
         port: 161,
         retries: 1,
@@ -83,7 +82,9 @@ app.get("/setTimeout/:timeout", function (req, res) {
         backwardsGetNexts: true,
         idBitsSize: 32,
     };
-    res.json("OK")
+    console.log("JOP SEP");
+    console.log(options);
+    res.json("OK");
 });
 
 function checkSnmpApi(ip, res) {
@@ -119,62 +120,8 @@ function checkSnmpApi(ip, res) {
     session.walk(oid, maxRepetitions, feedCb, doneCb); //walk ausführen
 }
 
-function checkNetwork(ip, mask, res) {
-    //bis jetzt nur mit einen Klasse C Netz möglich
-    if (validateIPaddress(ip) && validateMask(parseInt(mask))) {
-        let subnet = getSubnet(ip);
-
-        let allSnmpIp = [];
-
-        function checkSnmpForNetwork(ip, pos) {
-            let session = snmp.createSession(ip, "public", options);
-
-            var oid = "0.0.0.0.0.0";
-            let counter = 0;
-
-            function doneCb(error) {
-                //wenn die funtion fertig ist soll es
-                if (counter === 0) console.log(`IP: ${ip} false`);
-                else {
-                    console.log(`IP: ${ip} true`);
-                    allSnmpIp.push({ ip: ip, status: true, pos: pos });
-                }
-            }
-
-            function feedCb(varbinds) {
-                for (let i = 0; i < varbinds.length; i++) {
-                    if (snmp.isVarbindError(varbinds[i]))
-                        console.error(snmp.varbindError(varbinds[i]));
-                    else {
-                        counter += 1;
-                        return true;
-                    }
-                }
-                return false;
-            }
-
-            let maxRepetitions = 20;
-            session.walk(oid, maxRepetitions, feedCb, doneCb); //walk ausführen
-        }
-
-        for (let i = 0; i < 256; i++) {
-            //hosts generiren
-            let newIp = subnet + i;
-            console.log(newIp);
-            checkSnmpForNetwork(newIp, i);
-        }
-        setTimeout(() => {
-            allSnmpIp.sort((a, b) =>
-                a.pos > b.pos ? 1 : b.pos > a.pos ? -1 : 0
-            );
-
-            res.json(allSnmpIp);
-        }, 1000);
-    }
-}
-
-function subtree(ip, oid, res) {
-    let session = snmp.createSession(ip, "public", options);
+function subtree(ip, oid, comm, res) {
+    let session = snmp.createSession(ip, comm, options);
 
     let informations = [];
     function doneCb(error) {
@@ -203,40 +150,51 @@ function subtree(ip, oid, res) {
     session.subtree(oid, maxRepetitions, feedCb, doneCb);
 }
 
-function walk(ip, oid, res) {
-    let session = snmp.createSession(ip, "public", options);
-
-    let informations = [];
-    function doneCb(error) {
-        res.json(informations);
-        if (error) console.error(error.toString());
-    }
-
-    function feedCb(varbinds) {
-        for (let i = 0; i < varbinds.length; i++) {
-            if (snmp.isVarbindError(varbinds[i]))
-                console.error(snmp.varbindError(varbinds[i]));
-            else {
-                let value = varbinds[i].value;
-                if (varbinds[i].value instanceof Buffer) {
-                    value = varbinds[i].value.toString();
-                }
-                informations.push({ oid: varbinds[i].oid, value: value });
-            }
-        }
-    }
-
-    let maxRepetitions = 20;
-
-    // The maxRepetitions argument is optional, and will be ignored unless using
-    // SNMP verison 2c
-    session.walk(oid, maxRepetitions, feedCb, doneCb);
-}
-
 function pingNetwork(ip, mask, res) {
-    find(`${ip}/${mask}`).then(devices => {
-        res.json(devices);
-    })
+    let hosts = [];
+
+    let subnet = getSubnet(ip);
+    console.log("Subnet" + subnet);
+    for (let i = 0; i < 256; i++) {
+        hosts.push(subnet + i);
+    }
+
+    let alive = [];
+    let counter = 0;
+
+    hosts.forEach(function (host) {
+        ping.sys.probe(host, function (isAlive) {
+            counter++;
+
+            if (isAlive) {
+                let obj = { host: host, network: `${ip}/${mask}` };
+                console.log(obj);
+                alive.push(obj);
+            }
+
+            if (counter === 255) {
+                //array sortieren
+                alive.sort((a, b) => {
+                    const num1 = Number(
+                        a.host
+                            .split(".")
+                            .map((num) => `000${num}`.slice(-3))
+                            .join("")
+                    );
+                    const num2 = Number(
+                        b.host
+                            .split(".")
+                            .map((num) => `000${num}`.slice(-3))
+                            .join("")
+                    );
+                    return num1 - num2;
+                });
+                console.log("ruve");
+                console.log(alive);
+                res.json(alive);
+            }
+        });
+    });
 }
 
 function getSubnet(ip) {
@@ -246,22 +204,6 @@ function getSubnet(ip) {
             return ip.substring(0, i + 1);
         }
     }
-}
-
-function validateIPaddress(ipaddress) {
-    if (
-        /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(
-            ipaddress
-        )
-    ) {
-        return true;
-    }
-    return false;
-}
-
-function validateMask(mask) {
-    if (mask === 0 || mask === 8 || mask === 16 || mask === 24) return true;
-    return false;
 }
 
 function getBasicInformations(ip, res) {
@@ -320,15 +262,15 @@ function getBasicInformations(ip, res) {
     });
 }
 
-function get(ip, oid, res) {
-    let session = snmp.createSession(ip, "public", options);
+function get(ip, oid, comm, res) {
+    let session = snmp.createSession(ip, comm, options);
 
     let oids = [oid];
 
     session.get(oids, function (error, varbinds) {
         if (error) {
             console.error(error);
-            res.json({ status: "error" });
+            res.json({ status: "error", value: "Request timed out" });
         } else {
             for (var i = 0; i < varbinds.length; i++)
                 if (snmp.isVarbindError(varbinds[i])) {
@@ -351,7 +293,7 @@ function get(ip, oid, res) {
     });
 }
 
-function set(ip, oid, value, res) {
+function set(ip, oid, value, comm, res) {
     let varbinds = [
         {
             oid: oid,
@@ -360,7 +302,7 @@ function set(ip, oid, value, res) {
         },
     ];
 
-    let session = snmp.createSession(ip, "public", options);
+    let session = snmp.createSession(ip, comm, options);
 
     session.set(varbinds, function (error, varbinds) {
         if (error) {
@@ -382,23 +324,41 @@ function set(ip, oid, value, res) {
     });
 }
 
-function mib(res) {
-    console.log("Hallo");
-    let store = snmp.createModuleStore();
-    store.loadFromFile(
-        "C:\\Users\\Beniamin\\Documents\\WebDevelopment\\SNMP2\\Mikrotik.mib"
-    );
+function trap(res) {
+    var options = {
+        port: 162,
+        disableAuthorization: true,
+        accessControlModelType: snmp.AccessControlModelType.None,
+        engineID: "8000B98380XXXXXXXXXXXX", // where the X's are random hex digits
+        address: null,
+        transport: "udp4",
+    };
 
-    let providers = store.getModules(false);
+    var callback = function (error, notification) {
+        if (error) {
+            console.error(error);
+        } else {
+            console.log(notification);
 
-    let jsonData = JSON.stringify(providers);
-    let fs = require("fs");
-    fs.writeFile("prividers.txt", jsonData, function (err) {
-        if (err) {
-            console.log(err);
+            let varbinds = notification.pdu.varbinds;
+
+            for (let i = 0; i < varbinds.length; i++) {
+                let value = varbinds[i].value;
+                if (varbinds[i].value instanceof Buffer) {
+                    value = varbinds[i].value.toString();
+                }
+                varbinds[i].value = value;
+                console.log(value);
+            }
+            let data = { varbinds: varbinds, ip: notification.rinfo.address };
+            console.log("gott it");
+            res.json(data);
+            receiver.close();
         }
-    });
+    };
 
-    res.json(providers);
+    receiver = snmp.createReceiver(options, callback);
 }
+
 app.listen(port, () => console.log(`app listening on port ${port}!`));
+app.listen(3002, () => console.log(`app listening on port ${port}!`));

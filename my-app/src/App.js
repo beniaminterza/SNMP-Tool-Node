@@ -6,6 +6,7 @@ import GetSubtreeSet from "./Compontents/GetSubtreeSet";
 import GetSubtreeSetIp from "./Compontents/GetSubtreeSetIp";
 import ScanNetwork from "./Compontents/ScanNetwork";
 import ErrorLeiste from "./Compontents/ErrorLeiste";
+import Traps from "./Compontents/Traps";
 import "./Style/Basic.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -48,7 +49,10 @@ export default function App({ match }) {
                         />
                     </Route>
                     <Route path="/settings">
-                        <Setting timeout={timeout} setTimeouts={setTimeouts}/>
+                        <Setting timeout={timeout} setTimeouts={setTimeouts} />
+                    </Route>
+                    <Route path="/traps">
+                        <Traps available={available} />
                     </Route>
                 </Switch>
             </div>

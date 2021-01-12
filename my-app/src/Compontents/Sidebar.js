@@ -6,13 +6,18 @@ import logo from "../Images/LOGO.png";
 import home from "../Images/home-solid.svg";
 import walk from "../Images/walking-solid.svg";
 import radar from "../Images/radar.svg";
-import upload from "../Images/file-upload-solid.svg";
+import trap from "../Images/trap-solid.svg";
 import cog from "../Images/cog-solid.svg";
 import check from "../Images/check-solid.svg";
 import wrong from "../Images/wrong-solid.svg";
 
-export default function Sidebar({ url, setUrl, available, setAvailable, match }) {
-
+export default function Sidebar({
+    url,
+    setUrl,
+    available,
+    setAvailable,
+    match,
+}) {
     useEffect(() => {
         fetchData();
 
@@ -25,7 +30,9 @@ export default function Sidebar({ url, setUrl, available, setAvailable, match })
         fetch(`http://localhost:3001/check`)
             .then((response) => response.json())
             .then((data) => {
-                if (data) setAvailable(true);
+                if (data) {
+                    if (!available) setAvailable(true);
+                }
             })
             .catch((err) => {
                 setAvailable(false);
@@ -63,10 +70,10 @@ export default function Sidebar({ url, setUrl, available, setAvailable, match })
                 setUrl={setUrl}
             />
             <SidebarElem
-                link={"/loadMib"}
-                img={upload}
-                title="Load MIB"
-                alt="Upload"
+                link={"/traps"}
+                img={trap}
+                title="Traps"
+                alt="Trap"
                 url={url}
                 setUrl={setUrl}
             />
