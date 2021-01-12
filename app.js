@@ -4,6 +4,7 @@ const app = express();
 const port = 3001;
 const snmp = require("net-snmp");
 let ping = require("ping");
+const find = require("local-devices")
 
 var corsOptions = {
     origin: "*",
@@ -82,8 +83,6 @@ app.get("/setTimeout/:timeout", function (req, res) {
         backwardsGetNexts: true,
         idBitsSize: 32,
     };
-    console.log("JOP SEP")
-    console.log(options)
     res.json("OK")
 });
 
@@ -235,50 +234,9 @@ function walk(ip, oid, res) {
 }
 
 function pingNetwork(ip, mask, res) {
-    let hosts = [];
-
-    let subnet = getSubnet(ip);
-    console.log("Subnet" + subnet);
-    for (let i = 0; i < 256; i++) {
-        hosts.push(subnet + i);
-    }
-
-    let alive = [];
-    let counter = 0;
-
-    hosts.forEach(function (host) {
-        ping.sys.probe(host, function (isAlive) {
-            counter++;
-
-            if (isAlive) {
-                let obj = { host: host, network: `${ip}/${mask}` };
-                console.log(obj);
-                alive.push(obj);
-            }
-
-            if (counter === 255) {
-                //array sortieren
-                alive.sort((a, b) => {
-                    const num1 = Number(
-                        a.host
-                            .split(".")
-                            .map((num) => `000${num}`.slice(-3))
-                            .join("")
-                    );
-                    const num2 = Number(
-                        b.host
-                            .split(".")
-                            .map((num) => `000${num}`.slice(-3))
-                            .join("")
-                    );
-                    return num1 - num2;
-                });
-                console.log("ruve");
-                console.log(alive);
-                res.json(alive);
-            }
-        });
-    });
+    find(`${ip}/${mask}`).then(devices => {
+        res.json(devices);
+    })
 }
 
 function getSubnet(ip) {
@@ -443,5 +401,4 @@ function mib(res) {
 
     res.json(providers);
 }
-
 app.listen(port, () => console.log(`app listening on port ${port}!`));
