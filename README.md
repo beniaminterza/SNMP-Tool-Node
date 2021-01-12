@@ -23,7 +23,7 @@ node app.js
 
 3. Open the client site -> **https://beniaminterza.github.io/**
 
-# Featueres
+# Features
 - Get, Set or Subtree of any IP Address
 - Scan a /24 Network
 - Traps: Receive all traps in a network
