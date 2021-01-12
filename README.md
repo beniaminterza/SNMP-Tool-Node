@@ -1,6 +1,6 @@
 # About
 
-This project is a fullstack project made with Node JS and Vanilla JS. The goal of this project is to create a SNMP tool that is easy to use. I will use this library here: **https://www.npmjs.com/package/net-snmp**
+This project is a SNMP project made with Node JS and React JS. The goal of this project is to create a SNMP tool that is easy to use. I used this library here: **https://www.npmjs.com/package/net-snmp**
 
 # Installation
 If you are on Windows you can simply run the batch file-> SNMP.bat
@@ -21,22 +21,15 @@ In the CMD go to the folder where you this project is and run this command
 node app.js
 ```
 
-3. Now you can open under the frontend folder the file index.html in a new Browser tab.
-You should be able to use the application :)
-# Next Steps
-- add a Set function to the back/frontend
-- make the scan network function also possible with a /16 and /8 subnet
-- sort ip addresses from the scan network function
-- catch and display errors on the frontend
-- fix some styling issues
-- add title to each page
-- refine and improve CSS
-- simplify the backend functions
-- simplify the frontend script -> perhaps split the script into multiple files
+3. Open the client site -> **https://beniaminterza.github.io/**
 
-# Other goals
-- add more SNMP functions
-- add more animations to the frontend
-- make the frontend more user friendly
-- make the frontend with React
-- add more informational pages to frontend
+# Featueres
+- Get, Set or Subtree of any IP Address
+- Scan a /24 Network
+- Traps: Receive all traps in a network
+- Beautiful User Interface
+- Beautiful animations
+
+# Errors or Bugs
+- Traps: the Server is sometimes crashing
+- CSS is not responsive so use fullscreen
