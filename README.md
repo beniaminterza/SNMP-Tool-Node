@@ -2,6 +2,9 @@
 
 This project is a SNMP project made with Node JS and React JS. The goal of this project is to create a SNMP tool that is easy to use. I used this library here: **https://www.npmjs.com/package/net-snmp**
 
+# New
+To use the Client you can go here: https://beniaminterza.github.io/SNMP-REACT-Client
+
 # Installation
 If you are on Windows you can simply run the batch files-> Server.bat and then Client.bat
 
